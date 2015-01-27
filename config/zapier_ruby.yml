@@ -1,0 +1,5 @@
+base_url: "https://zapier.com/hooks/catch/"
+enable_logging: true
+web_hooks:
+  example_webhook1: "webhook_id"
+  example_webhook2: "webhook_id"

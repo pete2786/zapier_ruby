@@ -18,7 +18,7 @@ module ZapierRuby
     yield(config) if block_given?
   end
 
-    def configure_with(config = {})
+    def configure_with(path_to_yaml_file)
       self.config ||= ZapierRuby::Config.new
 
       begin

@@ -1,10 +1,10 @@
 module ZapierRuby
   class Zapper
-    attr_accessor :zap_name
+    attr_accessor :zap_name, :logger
 
     def initialize(zap_name)
       self.zap_name = zap_name
-      self.logger = LoggerDecorator.new(ZapierRuby.config[:enable_logging])
+      self.logger = LoggerDecorator.new(config.enable_logging)
     end
 
     def zap(params)
@@ -49,7 +49,7 @@ module ZapierRuby
     private :zap_headers
 
     def zap_url
-      "#{config.base_url}#{zap_web_hook_id}/"
+      "#{config.base_uri}#{zap_web_hook_id}/"
     end
     private :zap_url
 

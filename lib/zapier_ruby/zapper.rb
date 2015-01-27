@@ -1,10 +1,10 @@
 module ZapierRuby
   class Zapper
-    attr_accessor :zap_name, :logger
-    delegate :logger, to: :config
+    attr_accessor :zap_name
 
     def initialize(zap_name)
       self.zap_name = zap_name
+      self.logger = LoggerDecorator.new(ZapierRuby.config[:enable_logging])
     end
 
     def zap(params)
@@ -54,7 +54,7 @@ module ZapierRuby
     private :zap_url
 
     def config
-      @config ||= Zapier::Config.new
+      ZapierRuby.config
     end
     private :config
   end

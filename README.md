@@ -1,5 +1,7 @@
 # ZapierRuby
 
+[![Gem Version](https://badge.fury.io/rb/zapier_ruby.svg)](http://badge.fury.io/rb/zapier_ruby)
+
 Zapier Ruby provides a simple wrapper to post a 'zap' to a Zapier (https://zapier.com) webhook from any Ruby application. You must first have a Zapier account and have created a webhook configured to 'catch hook'. This gem is useful for simple integrations, such as posting to slack when an event happens in your Rails app, or sending an email when your chef deploy has completed.
 
 ## Installation

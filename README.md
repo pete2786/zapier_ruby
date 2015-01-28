@@ -21,25 +21,30 @@ Or install it yourself as:
 ## Usage
 
 ### General Usage
-First, configure ZapierRuby. Pass a hash of each of your zap webhooks you would like to integrate, you can also change the uri we post to or disable logging.
+First, configure ZapierRuby. Pass a hash of each of your zap webhooks you would like to integrate, you can also change the uri we post to or disable logging. Next, Instantiate a Zapper for the webhook to hit. Then, use the `zap` method with hash of params and send it to the Zapier web hook. `zap` returns true if it is able to successfully post the zap.
 
 ```
+require 'rubygems'
+require 'zapier_ruby'
+
 ZapierRuby.configure.do |c|
   c.web_hooks = {example_zap: "webhook_id"}
   c.enable_logging = false
 end
+
+zapper = ZapierRuby::Zapper.new(:example_zap)
+
+if zapper.zap({hello: "world"})
+  puts "zapped it"
+else
+ puts "it remains unzapped"
+end
 ```
 
-You can find the value to fill in for webhook id in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
+You can find the value to fill in for "webhook id" in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
 
 ![](https://github.com/pete2786/pete2786.github.io/blob/master/images/finding_webhook.png)
 
-Next, instantiate a Zapper for the webhook to hit. Then, use the `zap` method with hash of params and send it to the Zapier web hook.
-
-```
-zapper=ZapierRuby::Zapper.new(:example_zap)
-zapper.zap({hello: "world"})
-```
 
 Each param you send can be used by Zapier, so include all of the information required to complete the task.
 

@@ -7,9 +7,9 @@ module ZapierRuby
       self.logger = LoggerDecorator.new(config.enable_logging)
     end
 
-    def zap(params)
-      if zap_web_hook_id
-        logger.error "No zap configured for #{zap_name}. Check config/zapier_ruby.yml"
+    def zap(params={})
+      unless zap_web_hook_id
+        logger.error "No zap configured for #{zap_name}. Configured webhooks: #{config.web_hooks.to_s}"
         return false
       end
 

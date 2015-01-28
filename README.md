@@ -1,6 +1,6 @@
 # ZapierRuby
 
-TODO: Write a gem description
+Zapier Ruby provides a simple wrapper to post a 'zap' to a Zapier (https://zapier.com) webhook from any Ruby application. You must first have a Zapier account and have created a webhook configured to 'catch hook'. This gem is useful for simple integrations, such as posting to slack when an event happens in your Rails app, or sending an email when your chef deploy has completed.
 
 ## Installation
 
@@ -20,7 +20,51 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### General Usage
+First, configure ZapierRuby. Pass a hash of each of your zap webhooks you would like to integrate, you can also change the uri we post to or disable logging.
+
+```
+ZapierRuby.configure.do |c|
+  c.web_hooks = {example_zap: "webhook_id"}
+  c.enable_logging = false
+end
+```
+
+You can find the value to fill in for webhook id in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
+
+![](https://github.com/pete2786/pete2786.github.io/blob/master/images/finding_webhook.png)
+
+Next, instantiate a Zapper for the webhook to hit. Then, use the `zap` method with hash of params and send it to the Zapier web hook.
+
+```
+zapper=ZapierRuby::Zapper.new(:example_zap)
+zapper.zap({hello: "world"})
+```
+
+Each param you send can be used by Zapier, so include all of the information required to complete the task.
+
+### Rails Usage
+If you are using ZapierRuby with Rails, I'd recommend using creating an initializer (ex. config/intializers/zapier_ruby.rb) and with the following:
+
+```
+ZapierRuby.configure.do |c|
+  c.web_hooks = {example_zap: "zap_webhook_id"}
+end
+```
+
+#### Example Usage
+
+If you do not have email configured for you application, you could send an email via a Zap to notify a new user that their account has been created.
+```
+class User < ActiveRecord::Base
+  after_create :welcome_new_user
+  
+  def welcome_new_user
+    ZapierRuby::Zapper.new(:welcome_new_user).zap(user.attributes)
+  end
+end
+```
+
 
 ## Contributing
 

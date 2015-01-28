@@ -18,19 +18,8 @@ module ZapierRuby
     yield(config) if block_given?
   end
 
-    def configure_with(path_to_yaml_file)
-      self.config ||= ZapierRuby::Config.new
-
-      begin
-        config_yaml = YAML::load(IO.read(path_to_yaml_file))
-      rescue Errno::ENOENT
-        log(:warning, "YAML configuration file couldn't be found. Using defaults.")
-        return
-      rescue Psych::SyntaxError
-        log(:warning, "YAML configuration file contains invalid syntax. Using defaults.")
-        return
-      end
-
-      config.configure_with(config_yaml)
-    end
+  def self.configure_with(path_to_yaml_file)
+    self.config ||= ZapierRuby::Config.new
+    config.configure_with(path_to_yaml_file)    
+  end
 end

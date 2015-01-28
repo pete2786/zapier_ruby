@@ -4,7 +4,7 @@ module ZapierRuby
 
     def initialize(enable_logging)
       self.enable_logging = enable_logging
-      super(Logger.new(STDOUT))
+      super(ZapierRuby.config.logger)
     end
 
     def error(message)

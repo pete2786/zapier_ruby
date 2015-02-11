@@ -13,7 +13,7 @@ module ZapierRuby
         return false
       end
 
-      logger.info "Zapping #{zap_name} with params: #{params.to_json}"
+      logger.info "Zapping #{zap_name} with params: #{params.to_s}"
       post_zap(params)
     end
 
@@ -22,7 +22,7 @@ module ZapierRuby
         rest_client.post(params, zap_headers)
         true
       rescue Exception => e
-        logger.error "Unable to post to Zapier url: #{zap_url} with params: #{params.to_json}. Error: #{e.message}"
+        logger.error "Unable to post to Zapier url: #{zap_url} with params: #{params.to_s}. Error: #{e.message}"
         false
       end
     end

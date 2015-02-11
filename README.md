@@ -29,7 +29,7 @@ First, configure ZapierRuby. Pass a hash of each of your zap webhooks you would 
 require 'rubygems'
 require 'zapier_ruby'
 
-ZapierRuby.configure.do |c|
+ZapierRuby.configure do |c|
   c.web_hooks = {example_zap: "webhook_id"}
   c.enable_logging = false
 end
@@ -65,7 +65,7 @@ If you do not have email configured for you application, you could send an email
 ```
 class User < ActiveRecord::Base
   after_create :welcome_new_user
-  
+
   def welcome_new_user
     ZapierRuby::Zapper.new(:welcome_new_user).zap(user.attributes)
   end

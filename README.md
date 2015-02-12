@@ -59,6 +59,22 @@ ZapierRuby.configure.do |c|
 end
 ```
 
+### Command Line Usage ###
+To use this gem from the command line, you can leverage the `bin/zap` Ruby executable. In order to use this gem via command line, you must execute the gem in a folder which has a `.zapier_ruby.yml` file to configure your zaps. An example `.zapier_ruby.yml` file follows:
+
+```
+web_hooks:
+  :example_zap: "xxxxxx"
+enable_logging: false
+```
+
+You must pass `zap [zap_name] [Message]` to the executable. For example:
+```
+bundle exec zap example_zap "Hello, world."
+```
+
+Which will post {Message: "Hello, world"} to your web hook. The zap name must be configured in .zapier_ruby.yml the executable will error.
+
 #### Example Usage
 
 If you do not have email configured for you application, you could send an email via a Zap to notify a new user that their account has been created.

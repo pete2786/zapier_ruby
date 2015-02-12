@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby 
+require_relative '../lib/zapier_ruby'
+
+FILE_NAME = ".zapier_ruby.yml"
+
+if File.exists?(FILE_NAME)
+  ZapierRuby.configure_with(File.join(Dir.pwd, FILE_NAME))
+else
+  raise("Cannot find .zapier_ruby.yml file in pwd")
+end
+
+zap_name = ARGV[0].nil? ? raise("Must supply a zap name") : ARGV[0].to_sym
+message = ARGV[1] || "No message supplied."
+
+ZapierRuby::Zapper.new(zap_name).zap({Message: message})

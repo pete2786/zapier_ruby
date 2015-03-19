@@ -54,7 +54,7 @@ Each param you send can be used by Zapier, so include all of the information req
 If you are using ZapierRuby with Rails, I'd recommend using creating an initializer (ex. config/intializers/zapier_ruby.rb) and with the following:
 
 ```
-ZapierRuby.configure.do |c|
+ZapierRuby.configure do |c|
   c.web_hooks = {example_zap: "zap_webhook_id"}
 end
 ```

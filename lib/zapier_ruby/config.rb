@@ -13,7 +13,7 @@ module ZapierRuby
       begin
         config_yaml = YAML::load(IO.read(path_to_yaml_file))
         reconfigure(config_yaml)
-      rescue Exception => e
+      rescue StandardError => e
         logger.error "YAML configuration file cannot be loaded. Using defaults. Error :#{e.message}"
         return
       end

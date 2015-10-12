@@ -21,7 +21,7 @@ module ZapierRuby
       begin
         rest_client.post(params, zap_headers)
         true
-      rescue Exception => e
+      rescue StandardError => e
         logger.error "Unable to post to Zapier url: #{zap_url} with params: #{params.to_s}. Error: #{e.message}"
         false
       end

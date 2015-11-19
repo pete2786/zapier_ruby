@@ -5,7 +5,7 @@ module ZapierRuby
     def initialize(zap_name, web_hook_id=nil)
       self.zap_name = zap_name
       self.logger = LoggerDecorator.new(config.enable_logging)
-      @zap_web_hook = web_hook_id if !web_hook_id.nil?
+      @zap_web_hook = web_hook_id if web_hook_id
     end
 
     def zap(params={})

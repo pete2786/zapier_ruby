@@ -25,7 +25,7 @@ Or install it yourself as:
 ### General Usage
 First, configure ZapierRuby. Pass a hash of each of your zap webhooks you would like to integrate, you can also change the uri we post to or disable logging. Next, Instantiate a Zapper for the webhook to hit. Then, use the `zap` method with hash of params and send it to the Zapier web hook. `zap` returns true if it is able to successfully post the zap.
 
-```
+```ruby
 require 'rubygems'
 require 'zapier_ruby'
 
@@ -53,7 +53,7 @@ Each param you send can be used by Zapier, so include all of the information req
 ### Rails Usage
 If you are using ZapierRuby with Rails, I'd recommend using creating an initializer (ex. config/intializers/zapier_ruby.rb) and with the following:
 
-```
+```ruby
 ZapierRuby.configure do |c|
   c.web_hooks = {example_zap: "zap_webhook_id"}
 end
@@ -62,7 +62,7 @@ end
 ### Command Line Usage ###
 To use this gem from the command line, you can leverage the `bin/zap` Ruby executable. In order to use this gem via command line, you must execute the gem in a folder which has a `.zapier_ruby.yml` file to configure your zaps. An example `.zapier_ruby.yml` file follows:
 
-```
+```yaml
 web_hooks:
   :example_zap: "xxxxxx"
 enable_logging: false
@@ -78,7 +78,8 @@ Which will post {Message: "Hello, world"} to your web hook. The zap name must be
 #### Example Usage
 
 If you do not have email configured for you application, you could send an email via a Zap to notify a new user that their account has been created.
-```
+
+```ruby
 class User < ActiveRecord::Base
   after_create :welcome_new_user
 
@@ -91,7 +92,7 @@ end
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/zapier_ruby/fork )
+1. Fork it ( https://github.com/pete2786/zapier_ruby/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

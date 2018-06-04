@@ -10,34 +10,27 @@ module ZapierRuby
 
     def zap(params={})
       unless zap_web_hook_id
-        logger.error "No zap configured for #{zap_name}. Configured webhooks: #{config.web_hooks.to_s}"
-        return false
+        raise ZapierMisConfiguration, "No zap configured for #{zap_name}. Configured webhooks: #{config.web_hooks.to_s}"
       end
 
-      logger.info "Zapping #{zap_name} with params: #{params.to_s}"
+      logger.debug "Zapping #{zap_name} with params: #{params.to_s}"
       post_zap(params)
     end
 
+    private
+
     def post_zap(params)
-      begin
-        rest_client.post(params, zap_headers)
-        true
-      rescue StandardError => e
-        logger.error "Unable to post to Zapier url: #{zap_url} with params: #{params.to_s}. Error: #{e.message}"
-        false
-      end
+      rest_client.post(params, zap_headers)
+    rescue RestClient::ExceptionWithResponse => err
+      raise ZapierServerError, err
     end
-    private :post_zap
 
     def rest_client
       @rest_client ||= RestClient::Resource.new(zap_url, ssl_version: 'TLSv1')
     end
-    private :rest_client
 
     def zap_web_hook_id
-      return @zap_web_hook if defined?(@zap_web_hook)
-
-      @zap_web_hook = config.web_hooks[zap_name]
+      @zap_web_hook ||= config.web_hooks[zap_name]
     end
     private :zap_web_hook_id
 
@@ -47,16 +40,13 @@ module ZapierRuby
         "Content-Type" => "application/json"
       }
     end
-    private :zap_headers
 
     def zap_url
       "#{config.base_uri}#{zap_web_hook_id}/"
     end
-    private :zap_url
 
     def config
       ZapierRuby.config
     end
-    private :config
   end
 end

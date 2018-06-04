@@ -4,6 +4,7 @@ require 'delegate'
 require 'logger'
 
 require 'zapier_ruby/version'
+require 'zapier_ruby/exceptions'
 require 'zapier_ruby/logger_decorator'
 require 'zapier_ruby/config'
 require 'zapier_ruby/zapper'

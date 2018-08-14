@@ -14,5 +14,9 @@ module ZapierRuby
     def info(message)
       super if enable_logging
     end
+
+    def debug(message)
+      super if enable_logging
+    end
   end
 end

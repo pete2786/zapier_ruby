@@ -41,6 +41,16 @@ if zapper.zap({hello: "world"})
 else
  puts "it remains unzapped"
 end
+
+standard_url = 'https://hooks.zapier.com/hooks/standard/123456/xxxxxx/'
+zapper = ZapierRuby::ZapperHook.new(url: standard_url)
+
+if zapper.zap({hello: "world"})
+  puts "zapped it"
+else
+ puts "it remains unzapped"
+end
+
 ```
 
 You can find the value to fill in for "webhook id" in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:

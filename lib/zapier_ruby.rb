@@ -11,7 +11,6 @@ require 'zapier_ruby/logger_decorator'
 require 'zapier_ruby/config'
 require 'zapier_ruby/base'
 require 'zapier_ruby/zapper'
-require 'zapier_ruby/zapper_hook'
 
 module ZapierRuby
   class << self

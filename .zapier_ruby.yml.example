@@ -1,3 +1,9 @@
 web_hooks:
   :test_zap: "xxxxxx"
 enable_logging: false
+
+# for new zaps, grab you account id from your webhook uri
+account_id: 1234
+
+# for older zaps, use this base uri
+base_uri: https://zapier.com/hooks/catch/

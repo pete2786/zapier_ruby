@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 require_relative '../lib/zapier_ruby'
 
 FILE_NAME = ".zapier_ruby.yml"
@@ -12,4 +12,4 @@ end
 zap_name = ARGV[0].nil? ? raise("Must supply a zap name") : ARGV[0].to_sym
 message = ARGV[1] || "No message supplied."
 
-ZapierRuby::Zapper.new(zap_name).zap({Message: message})
+puts ZapierRuby::Zapper.new(zap_name).zap({Message: message})

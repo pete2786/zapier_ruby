@@ -6,14 +6,12 @@ module ZapierRuby
 
     def post_zap(params)
       uri = URI.parse(zap_url)
+      logger.debug(uri)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       request = Net::HTTP::Post.new(uri.request_uri, zap_headers)
       request.body = params.to_json
-      response = http.request(request)
-
-      # return if successful
-      response.code == 200
+      http.request(request)
     rescue StandardError => err
       raise ZapierServerError, err
     end
@@ -30,7 +28,11 @@ module ZapierRuby
     end
 
     def zap_url
-      "#{config.base_uri}#{zap_web_hook_id}/"
+      if config.account_id
+        "#{config.base_uri}/#{config.account_id}/#{zap_web_hook_id}/"
+      else
+        "#{config.base_uri}#{zap_web_hook_id}/"
+      end
     end
 
     def config

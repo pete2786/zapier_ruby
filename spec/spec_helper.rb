@@ -10,5 +10,6 @@ ZapierRuby.configure do |c|
   c.enable_logging = false
 end
 
- RSpec.configure do |config|
+RSpec.configure do |config|
+
 end

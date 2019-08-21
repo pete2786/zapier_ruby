@@ -31,7 +31,7 @@ module ZapierRuby
       if config.account_id
         "#{config.base_uri}/#{config.account_id}/#{zap_web_hook_id}/"
       else
-        "#{config.base_uri}#{zap_web_hook_id}/"
+        "#{config.base_uri}/#{zap_web_hook_id}/"
       end
     end
 

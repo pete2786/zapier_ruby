@@ -27,7 +27,7 @@ require 'spec_helper'
     end
 
     it '.base_uri' do
-      expect(ZapierRuby.config.base_uri).to eq "https://hooks.zapier.com/hooks/catch/"
+      expect(ZapierRuby.config.base_uri).to eq "https://hooks.zapier.com/hooks/catch"
     end
 
     describe '#zap' do
@@ -43,6 +43,24 @@ require 'spec_helper'
 
         expect(response.code).to eq "200"
         expect(JSON.parse(response.body)['status']).to eq 'success'
+      end
+    end
+
+    describe 'with account id' do
+      it 'has account id in url' do
+        ZapierRuby.configure { |c| c.account_id = "12345" }
+        url = zapper.new(:nil, 'uuiq').send(:zap_url)
+        expect(url).to eq 'https://hooks.zapier.com/hooks/catch/12345/uuiq/'
+        ZapierRuby.configure { |c| c.account_id = nil }
+      end
+    end
+
+    describe 'with base uri configured' do
+      it 'has account id in url' do
+        ZapierRuby.configure { |c| c.base_uri = "https://test.com" }
+        url = zapper.new(:nil, 'uuiq').send(:zap_url)
+        expect(url).to eq 'https://test.com/uuiq/'
+        ZapierRuby.configure { |c| c.base_uri = nil }
       end
     end
   end

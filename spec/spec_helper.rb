@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'webmock/rspec'
 require 'pry'
 require 'zapier_ruby'
 

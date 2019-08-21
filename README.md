@@ -30,8 +30,13 @@ require 'rubygems'
 require 'zapier_ruby'
 
 ZapierRuby.configure do |c|
-  c.web_hooks = {example_zap: "webhook_id"}
+  c.web_hooks = { example_zap: "webhook_id" }
   c.enable_logging = false
+  # For new web hooks, you must provide this param
+  c.account_id = "1234" # Get this from the first part of your webhook URI
+
+  # For older webhooks, you should override the base uri to the old uri
+  c.base_uri = "https://hooks.zapier.com/hooks/catch/"
 end
 
 zapper = ZapierRuby::Zapper.new(:example_zap)
@@ -42,8 +47,7 @@ else
  puts "it remains unzapped"
 end
 
-standard_url = 'https://hooks.zapier.com/hooks/standard/123456/xxxxxx/'
-zapper = ZapierRuby::ZapperHook.new(url: standard_url)
+zapper = ZapierRuby::Zapper.new(url: standard_url)
 
 if zapper.zap({hello: "world"})
   puts "zapped it"
@@ -53,7 +57,7 @@ end
 
 ```
 
-You can find the value to fill in for "webhook id" in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
+You can find the value to fill in for "webhook id" and "account id" in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
 
 ![](https://github.com/pete2786/pete2786.github.io/blob/master/images/finding_webhook.png)
 
@@ -74,8 +78,15 @@ To use this gem from the command line, you can leverage the `bin/zap` Ruby execu
 
 ```yaml
 web_hooks:
-  :example_zap: "xxxxxx"
+  :test_zap: "xxxxxx"
 enable_logging: false
+
+# for new zaps, grab you account id from your webhook uri
+account_id: 1234
+
+# for older zaps, use this base uri
+base_uri: https://zapier.com/hooks/catch/
+
 ```
 
 You must pass `zap [zap_name] [Message]` to the executable. For example:

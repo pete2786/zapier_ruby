@@ -13,7 +13,7 @@ require 'spec_helper'
 
   describe 'Zapper' do
     let(:zapper) { ZapierRuby::Zapper }
-    let(:catch_url) { 'https://zapier.com/hooks/catch/webhook_id/' }
+    let(:catch_url) { 'https://hooks.zapier.com/hooks/catch/webhook_id/' }
     let(:instance) { zapper.new(:example_zap) }
 
     describe '#zap_url' do
@@ -22,12 +22,12 @@ require 'spec_helper'
       it 'web_hook_id has val' do
         url = zapper.new(:nil, 'webhook_id/uuiq').send(:zap_url)
 
-        expect(url).to eq 'https://zapier.com/hooks/catch/webhook_id/uuiq/'
+        expect(url).to eq 'https://hooks.zapier.com/hooks/catch/webhook_id/uuiq/'
       end
     end
 
     it '.base_uri' do
-      expect(ZapierRuby.config.base_uri).to eq "https://zapier.com/hooks/catch/"
+      expect(ZapierRuby.config.base_uri).to eq "https://hooks.zapier.com/hooks/catch"
     end
 
     describe '#zap' do
@@ -41,27 +41,27 @@ require 'spec_helper'
         stub_request(:post, catch_url).with(body: body).to_return(body: result.to_json)
         response = instance.zap(body)
 
-        expect(response.code).to eq 200
-        expect(JSON.parse(response)['status']).to eq 'success'
+        expect(response.code).to eq "200"
+        expect(JSON.parse(response.body)['status']).to eq 'success'
       end
     end
-  end
 
-  describe 'ZapperHook' do
-    let(:zapper_hook) { ZapierRuby::ZapperHook }
-    let(:hookurl) { 'https://hooks.zapier.com/hooks/standard/1234/uuiq/' }
-    let(:instance) { zapper_hook.new(url: hookurl) }
-
-    it '#zap_url' do
-      expect(instance.send('zap_url')).to eq hookurl
+    describe 'with account id' do
+      it 'has account id in url' do
+        ZapierRuby.configure { |c| c.account_id = "12345" }
+        url = zapper.new(:nil, 'uuiq').send(:zap_url)
+        expect(url).to eq 'https://hooks.zapier.com/hooks/catch/12345/uuiq/'
+        ZapierRuby.configure { |c| c.account_id = nil }
+      end
     end
 
-    it '#zap' do
-      stub_request(:post, hookurl).with(body: body).to_return(body: result.to_json)
-      response = instance.zap(body)
-
-      expect(response.code).to eq 200
-      expect(JSON.parse(response)['status']).to eq 'success'
+    describe 'with base uri configured' do
+      it 'has account id in url' do
+        ZapierRuby.configure { |c| c.base_uri = "https://test.com" }
+        url = zapper.new(:nil, 'uuiq').send(:zap_url)
+        expect(url).to eq 'https://test.com/uuiq/'
+        ZapierRuby.configure { |c| c.base_uri = nil }
+      end
     end
   end
 end

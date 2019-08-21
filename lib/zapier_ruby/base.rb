@@ -5,13 +5,17 @@ module ZapierRuby
     private
 
     def post_zap(params)
-      rest_client.post(params, zap_headers)
-    rescue RestClient::ExceptionWithResponse => err
-      raise ZapierServerError, err
-    end
+      uri = URI.parse(zap_url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      request = Net::HTTP::Post.new(uri.request_uri, zap_headers)
+      request.body = params.to_json
+      response = http.request(request)
 
-    def rest_client
-      @rest_client ||= RestClient::Resource.new(zap_url, ssl_version: 'TLSv1')
+      # return if successful
+      response.code == 200
+    rescue StandardError => err
+      raise ZapierServerError, err
     end
 
     def zap_web_hook_id

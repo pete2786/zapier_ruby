@@ -1,4 +1,6 @@
-require 'rest_client'
+require 'net/http'
+require 'uri'
+require 'json'
 require 'yaml'
 require 'delegate'
 require 'logger'

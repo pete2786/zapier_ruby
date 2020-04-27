@@ -47,7 +47,7 @@ else
  puts "it remains unzapped"
 end
 
-zapper = ZapierRuby::Zapper.new(url: standard_url)
+zapper = ZapierRuby::ZapperStandard.new(url: standard_url)
 
 if zapper.zap({hello: "world"})
   puts "zapped it"

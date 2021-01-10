@@ -47,14 +47,6 @@ else
  puts "it remains unzapped"
 end
 
-zapper = ZapierRuby::Zapper.new(url: standard_url)
-
-if zapper.zap({hello: "world"})
-  puts "zapped it"
-else
- puts "it remains unzapped"
-end
-
 ```
 
 You can find the value to fill in for "webhook id" and "account id" in the location highlighted below ('xxxxxx' in the green box) when configuring your Zap:
